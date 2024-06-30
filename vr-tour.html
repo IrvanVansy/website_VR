@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width" />
+    <title>TMII Virtual Reality Tour</title>
+    <script src="./js/aframe/aframe.min.js"></script>
+    <script src="./js/aframe/aframe-event-set-component.min.js"></script>
+    <script src="./js/aframe/aframe-layout-component.min.js"></script>
+    <script src="./js/aframe/aframe-template-component.min.js"></script>
+    <script src="./js/aframe/aframe-proxy-event-component.min.js"></script>
+  </head>
+
+  <body>
+    <a-scene>
+      <a-assets>
+        <audio id="click-sound" crossorigin="anonymous" src="./audio/click.ogg"></audio>
+        <img id="tmii-01" crossorigin="anonymous" src="./assets/tmii_00.jpg" />
+        <img id="tmii-02" crossorigin="anonymous" src="./assets/tmii_01.jpg" />
+        <img id="tmii-03" crossorigin="anonymous" src="./assets/tmii_02.jpg" />
+        <img id="tmii-04" crossorigin="anonymous" src="./assets/tmii_03.jpg" />
+        <img id="tmii-05" crossorigin="anonymous" src="./assets/tmii_04.jpg" />
+        <img id="tmii-06" crossorigin="anonymous" src="./assets/tmii_05.jpg" />
+        <img id="pintuKeluar" crossorigin="anonymous" src="./assets/pintuKeluar01.jpg" />
+        <img id="ballroom-01" crossorigin="anonymous" src="./assets/ballroom01.jpg" />
+        <img id="ballroom-02" crossorigin="anonymous" src="./assets/ballroom02.jpg" />
+        <img id="ballroom-03" crossorigin="anonymous" src="./assets/ballroom03.jpg" />
+        <img id="terrace-01" crossorigin="anonymous" src="./assets/terrace01.jpg" />
+        <img id="terrace-02" crossorigin="anonymous" src="./assets/terrace02.jpg" />
+        <img id="theater" crossorigin="anonymous" src="./assets/theater01.jpg" />
+        <img id="hotel" crossorigin="anonymous" src="./assets/hotel01.jpg" />
+        <img id="jco" crossorigin="anonymous" src="./assets/jco01.jpg" />
+        <img id="masjid-01" crossorigin="anonymous" src="./assets/masjid01.jpg" />
+        <img id="masjid-02" crossorigin="anonymous" src="./assets/masjid02.jpg" />
+        <img id="masjid-03" crossorigin="anonymous" src="./assets/masjid03.jpg" />
+        <img id="pintuMasuk-01" crossorigin="anonymous" src="./assets/pintuMasuk01.jpg" />
+        <img id="pintuMasuk-02" crossorigin="anonymous" src="./assets/pintuMasuk02.jpg" />
+
+        <!-- Image link template to be reused. -->
+        <script id="link" type="text/html">
+          <a-entity
+            class="link"
+            geometry="primitive: sphere; radius: 0.5; rotation: 90 0 90"
+            material="shader: flat; src: ${thumb}"
+            event-set__mouseenter="scale: 1.2 1.2 1"
+            event-set__mouseleave="scale: 1 1 1"
+            event-set__click="_target: #image-360; _delay: 300; material.src: ${src}"
+            proxy-event="event: click; to: #image-360; as: fade"
+            sound="on: click; src: #click-sound"
+          >
+          </a-entity>
+        </script>
+      </a-assets>
+
+      <!-- Camera + cursor. -->
+      <a-entity id="camera" camera look-controls>
+        <a-cursor
+          id="cursor"
+          position="0 0 -5"
+          geometry="primitive: ring; radiusInner: 0.05; radiusOuter: 0.1;"
+          material="color: black; shader: flat"
+          cursor="maxDistance: 30; fuse: true"
+          animation__click="property: scale; from: 0.5 0.5 0.5; to: 1 1 1;startEvents: click; dur: 150;easing:easeInQuad;"
+          animation__fusing="property: scale; from: 1 1 1; to: 0.5 0.5 0.5;startEvents: fusing; dur: 1000;easing:easeInQuad;"
+          event-set__mouseenter="_event: mouseenter; color: springgreen"
+          event-set__mouseleave="_event: mouseleave; color: black"
+          raycaster="objects: .link"
+        ></a-cursor>
+      </a-entity>
+      <!-- 360-degree image. -->
+      <a-sky
+        id="image-360"
+        radius="10"
+        src="#tmii-01"
+        animation__fade="property: components.material.material.color; type: color; from: #FFF; to: #000; dur: 300; startEvents: fade"
+        animation__fadeback="property: components.material.material.color; type: color; from: #000; to: #FFF; dur: 300; startEvents: animationcomplete__fade"
+      >
+      </a-sky>
+
+      <!-- Image links. -->
+      <a-text value="TMII" position="-5 -4 0.5" rotation="0 90 0"></a-text>
+      <a-entity id="links" layout="type: line; margin: 1.5" position="-5 -3 1.5" rotation="-90 90 0">
+        <a-entity template="src: #link" data-src="#tmii-01" data-thumb="#tmii-01"></a-entity>
+        <a-entity template="src: #link" data-src="#tmii-02" data-thumb="#tmii-02"></a-entity>
+        <a-entity template="src: #link" data-src="#tmii-03" data-thumb="#tmii-03"></a-entity>
+        <a-entity template="src: #link" data-src="#jco" data-thumb="#jco"></a-entity>
+        <a-entity template="src: #link" data-src="#hotel" data-thumb="#hotel"></a-entity>
+      </a-entity>
+      <a-text value="TMII" position="0 -4 -5" rotation="0 0 0"></a-text>
+      <a-entity id="links" layout="type: line; margin: 1.5" position="-2 -3 -5" rotation="-90 0 0">
+        <a-entity template="src: #link" data-src="#tmii-04" data-thumb="#tmii-04"></a-entity>
+        <a-entity template="src: #link" data-src="#tmii-05" data-thumb="#tmii-05"></a-entity>
+        <a-entity template="src: #link" data-src="#tmii-06" data-thumb="#tmii-06"></a-entity>
+        <a-entity template="src: #link" data-src="#pintuKeluar" data-thumb="#pintuKeluar"></a-entity>
+        <a-entity template="src: #link" data-src="#theater" data-thumb="#theater"></a-entity>
+      </a-entity>
+      <a-text value="ballroom" position="5 -4 -0.5" rotation="0 -90 0"></a-text>
+      <a-entity id="links" layout="type: line; margin: 1.5" position="5 -3 -1.5" rotation="-90 -90 0">
+        <a-entity template="src: #link" data-src="#ballroom-01" data-thumb="#ballroom-01"></a-entity>
+        <a-entity template="src: #link" data-src="#ballroom-02" data-thumb="#ballroom-02"></a-entity>
+        <a-entity template="src: #link" data-src="#ballroom-03" data-thumb="#ballroom-03"></a-entity>
+        <a-entity template="src: #link" data-src="#terrace-01" data-thumb="#terrace-01"></a-entity>
+        <a-entity template="src: #link" data-src="#terrace-02" data-thumb="#terrace-02"></a-entity>
+      </a-entity>
+      <a-text value="pintuMasuk" position="0 -4 5" rotation="0 180 0"></a-text>
+      <a-entity id="links" layout="type: line; margin: 1.5" position="0 -3 5" rotation="-90 180 0">
+        <a-entity template="src: #link" data-src="#pintuMasuk-01" data-thumb="#pintuMasuk-01"></a-entity>
+        <a-entity template="src: #link" data-src="#pintuMasuk-02" data-thumb="#pintuMasuk-02"></a-entity>
+        <a-entity template="src: #link" data-src="#masjid-01" data-thumb="#masjid-01"></a-entity>
+        <a-entity template="src: #link" data-src="#masjid-02" data-thumb="#masjid-02"></a-entity>
+        <a-entity template="src: #link" data-src="#masjid-03" data-thumb="#masjid-03"></a-entity>
+      </a-entity>
+    </a-scene>
+  </body>
+</html>
