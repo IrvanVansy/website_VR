@@ -1,6 +1,10 @@
 # WEBSITE
 Website ini merupakan website Virtual Reality Tour untuk Taman Nasional Indonesia Indah (TMII), dimana kamu dapat melihat beberapa titik yang ada pada TMII. 
-[View Website](https://irvanvansy.github.io/website_VR/)
+[View Website](https://irvanvansy.github.io/website_VR/) atau scan qr code dibawah ini:
+
+---
+
+![QR Code untuk Website VR](qr-code.png "Scan untuk mengakses Website VR")
 
 ---
 
